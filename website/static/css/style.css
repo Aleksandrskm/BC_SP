@@ -1261,3 +1261,15 @@ body:has(dialog[open]) {
 .closes{
     margin-top: 70%;
 }
+#group_TLE{
+    max-width: 225px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 6px;
+    width: max(225px, 15vw);
+    border-radius: 6px;
+    border-width: 2px;
+    font-size: calc(1rem);
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
