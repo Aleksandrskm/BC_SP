@@ -5,13 +5,18 @@ import { viewDefaulTles } from '../features/flows/viewDefaulTles.js';
 import { eventSend } from '../features/flows/eventSendFlow.js';
 import {onBcFileChange} from "../features/flows/handleBcFile.js";
 import { onTlesFileChange } from "../features/flows/handleTleFile.js";
+import {getCountries} from "../features/api/getCountries.js";
+import {getNaznachenie} from "../features/api/getNaznachenie.js";
 
 /**
  * Функция инициализации страницы добавления и редактирование TLE и БЦ.
  * */
 export function initPageAdd() {
     startDateTimer('#timer');
-    setupEventListeners()
+    setupEventListeners();
+    mountCountry().then();
+    mountNaznachenie().then();
+
 }
 
 /**
@@ -24,5 +29,33 @@ function setupEventListeners() {
     document.getElementById('task-btn-TLE').addEventListener('click', eventSend);
     document.getElementById('get_TLE').addEventListener('change', onBcFileChange);
     document.getElementById('get_TLEs').addEventListener('change', onTlesFileChange);
+}
+async function  mountCountry(){
+    const selectedValue = document.querySelector('input[name="type_bd"]:checked').value;
+    console.log(selectedValue);
+    const country = await getCountries(selectedValue);
+    const options = [];
+    country.forEach(({ID,NAIM}) => {
+        const option =document.createElement('option');
+        option.value = ID;
+        option.textContent = NAIM;
+        options.push(option)
+    })
+    document.getElementById('country').append(...options)
+    console.log(country,'country');
+}
+async function  mountNaznachenie(){
+    const selectedValue = document.querySelector('input[name="type_bd"]:checked').value;
+    console.log(selectedValue);
+    const naznachenie = await getNaznachenie(selectedValue);
+    const options = [];
+    naznachenie.forEach(({ID,NAIM}) => {
+        const option =document.createElement('option');
+        option.value = ID;
+        option.textContent = NAIM;
+        options.push(option)
+    })
+    document.getElementById('type').append(...options)
+
 }
 

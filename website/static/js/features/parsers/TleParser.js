@@ -8,9 +8,9 @@ export class TleParser{
      * @param  { String } line - Строка TLE для парса.
      * @param  { Number } countLine - позиция строки в документе.
      * @param  { DataTle } tle - объект TLE для записи данных.
-     * @param { String } group - поле группировки
+     * @param { Object } fields - объект с доп полями
      */
-    #parseTLELine(line,countLine,tle,group) {
+    #parseTLELine(line,countLine,tle,{country,type,group}) {
         let dataTLE;
         dataTLE=line;
         let element='';
@@ -20,6 +20,8 @@ export class TleParser{
             tle.NAIM=dataTLE;
             tle.NAIM_RUS= dataTLE.replace('GONETS','Гонец')
             tle.GRUP=group;
+            tle.ID_COUNTRY=Number(country);
+            tle.ID_NAZNACHENIE=Number(type);
         }
         else if (countLine==1) {
             tle.TLE_LINE1=dataTLE;
@@ -432,7 +434,14 @@ export class TleParser{
             lines = (fileReader).split("\r\n");
         }
         else  lines = fileReader;
+        const  country = document.getElementById('country').value ?? '';
+        const  type = document.getElementById('type').value ?? ''
         const group = document.getElementById('group_TLE').value ?? '';
+        const fields ={
+            country,
+            type,
+            group,
+        }
         console.log(lines)
         let countLine=0;
         for (const line of lines) {
@@ -441,7 +450,7 @@ export class TleParser{
                 arrClassTlEs.push(tle);
                 tle=new DataTle();
             }
-            this.#parseTLELine(line,countLine,tle,group);
+            this.#parseTLELine(line,countLine,tle,fields);
             countLine++;
         }
         arrClassTlEs.push(tle);
