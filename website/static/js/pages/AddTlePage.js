@@ -7,6 +7,8 @@ import {onBcFileChange} from "../features/flows/handleBcFile.js";
 import { onTlesFileChange } from "../features/flows/handleTleFile.js";
 import {getCountries} from "../features/api/getCountries.js";
 import {getNaznachenie} from "../features/api/getNaznachenie.js";
+import {getGroups} from "../features/api/getGroups.js";
+import {getOrganization} from "../features/api/getOrganization.js";
 
 /**
  * Функция инициализации страницы добавления и редактирование TLE и БЦ.
@@ -16,6 +18,8 @@ export function initPageAdd() {
     setupEventListeners();
     mountCountry().then();
     mountNaznachenie().then();
+    mountGroups().then();
+
 
 }
 
@@ -56,6 +60,34 @@ async function  mountNaznachenie(){
         options.push(option)
     })
     document.getElementById('type').append(...options)
+
+}
+async function  mountGroups(){
+    const selectedValue = document.querySelector('input[name="type_bd"]:checked').value;
+    console.log(selectedValue);
+    const groups = await getGroups(selectedValue);
+    const options = [];
+    groups.forEach((group) => {
+        const option =document.createElement('option');
+        option.value = group;
+        option.textContent = group;
+        options.push(option)
+    })
+    document.getElementById('groups_TLE').append(...options)
+
+}
+async function  mountOrganizations(){
+    const selectedValue = document.querySelector('input[name="type_bd"]:checked').value;
+    console.log(selectedValue);
+    const groups = await getOrganization(selectedValue);
+    const options = [];
+    groups.forEach(({ID,NAIM}) => {
+        const option =document.createElement('option');
+        option.value = ID;
+        option.textContent = NAIM;
+        options.push(option)
+    })
+    document.getElementById('groups_TLE').append(...options)
 
 }
 

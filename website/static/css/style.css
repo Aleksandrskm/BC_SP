@@ -1261,15 +1261,30 @@ body:has(dialog[open]) {
 .closes{
     margin-top: 70%;
 }
-#group_TLE,#type,#country{
-    max-width: 225px;
+#group_TLE,#type,#country,#organiztion{
+    max-width: 200px;
     margin-bottom: 10px;
     margin-top: 10px;
     padding: 6px;
-    width: max(225px, 15vw);
+    width: max(225px, 12vw);
     border-radius: 6px;
     border-width: 2px;
     font-size: calc(1rem);
     font-weight: bold;
     font-family: Arial, sans-serif;
+}
+#groups_TLE{
+    max-width: 225px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 6px;
+    width: max(200px, 12vw);
+    border-radius: 6px;
+    border-width: 2px;
+    font-size: calc(1rem);
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+.header3{
+    font-size: calc(1.2rem)
 }

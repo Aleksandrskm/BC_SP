@@ -10,7 +10,7 @@ export class TleParser{
      * @param  { DataTle } tle - объект TLE для записи данных.
      * @param { Object } fields - объект с доп полями
      */
-    #parseTLELine(line,countLine,tle,{country,type,group}) {
+    #parseTLELine(line,countLine,tle,{country,type,group,organiztion}) {
         let dataTLE;
         dataTLE=line;
         let element='';
@@ -22,6 +22,7 @@ export class TleParser{
             tle.GRUP=group;
             tle.ID_COUNTRY=Number(country);
             tle.ID_NAZNACHENIE=Number(type);
+            tle.ID_ORGANIZATION=Number(organiztion);
         }
         else if (countLine==1) {
             tle.TLE_LINE1=dataTLE;
@@ -435,12 +436,16 @@ export class TleParser{
         }
         else  lines = fileReader;
         const  country = document.getElementById('country').value ?? '';
-        const  type = document.getElementById('type').value ?? ''
-        const group = document.getElementById('group_TLE').value ?? '';
+        const  organiztion = document.getElementById('organiztion').value ?? '';
+        const  type = document.getElementById('type').value ?? '';
+        const  selectedValue = document.querySelector('input[name="type_group"]:checked').value;
+
+        const group = selectedValue === '1'?document.getElementById('groups_TLE').value ?? '':document.getElementById('group_TLE').value ?? '';
         const fields ={
             country,
             type,
             group,
+            organiztion,
         }
         console.log(lines)
         let countLine=0;

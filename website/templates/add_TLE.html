@@ -61,10 +61,36 @@
 
                 </div>
                 <div class="group">
-                    <label for="group_TLE">
-                        Группировка:
+                    <div class="header3">Группировка КА:</div>
+                    <div >
+                        <input type="radio" name="type_group" value="1" id="real-group" checked="">
+                        <label for="real-group">Существующая</label>
+                        <label for="group_TLE">
+
+                        </label>
+                        <select id="groups_TLE" name="groups_TLE">
+<!--                            <option>Гонец</option>-->
+<!--                            <option>Старлинк</option>-->
+                        </select>
+                    </div>
+                    <div>
+                        <input type="radio" name="type_group" value="2" id="test-group">
+                        <label for="test-group">Новая</label>
+
+                        <label for="group_TLE">
+                        </label>
+                        <input id="group_TLE" name="group_TLE" type="text">
+                    </div>
+
+
+                </div>
+                <div class="organiztions">
+                    <label for="organiztion">
+                        Организация:
                     </label>
-                    <input id="group_TLE" name="group_TLE" type="text">
+                    <select id="organiztion" name="organiztion" >
+
+                    </select>
                 </div>
                 <div class="select_Country">
                     <label for="country">
