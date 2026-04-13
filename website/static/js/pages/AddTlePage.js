@@ -19,6 +19,7 @@ export function initPageAdd() {
     mountCountry().then();
     mountNaznachenie().then();
     mountGroups().then();
+    mountOrganizations().then();
 
 
 }
@@ -79,15 +80,16 @@ async function  mountGroups(){
 async function  mountOrganizations(){
     const selectedValue = document.querySelector('input[name="type_bd"]:checked').value;
     console.log(selectedValue);
-    const groups = await getOrganization(selectedValue);
+    const org = await getOrganization(selectedValue);
     const options = [];
-    groups.forEach(({ID,NAIM}) => {
+    console.log('org',org)
+    org.forEach(({ID,NAIM}) => {
         const option =document.createElement('option');
         option.value = ID;
         option.textContent = NAIM;
         options.push(option)
     })
-    document.getElementById('groups_TLE').append(...options)
+    document.getElementById('organiztion').append(...options)
 
 }
 
