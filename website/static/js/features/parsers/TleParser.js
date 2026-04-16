@@ -86,66 +86,65 @@ export class TleParser{
                     }
                 }
                 else if (i>32 && i<43) {
-                    // console.log(element,i)
                     if (i==42) {
-                        element+=dataTLE[i];
-                        let correctElem
-                        // console.log(element[0])
-                        if (element[0]==' ') {
-                            correctElem=element.replace(/\s/,'0');
-                        }
-                        tle.TLE_PERV_PROIZV=+correctElem;
-                        element='';
-                        counter+=1;
-                    }
-                    else{
-                        element+=dataTLE[i];
+                        element += dataTLE[i];
+                        let correctElem = element.trim(); // Удаляем пробелы в начале и конце
+                        tle.TLE_PERV_PROIZV = parseFloat(correctElem);
+                        element = '';
+                        counter += 1;
+                    } else {
+                        element += dataTLE[i];
                     }
                 }
                 else if (i>43 && i<53) {
                     if (i==52) {
-                        let correctElem='';
-                        let num='',degree='';
-                        if (element[0]==' ') {
-                            correctElem=element.replace(/\s/,'0');
-                            let indexDegree=element.search(/[-+]/);
-                            for (let i = 0; i < indexDegree; i++) {
-                                num+=correctElem[i];
-                            }
-                            for (let index = indexDegree; index < correctElem.length; index++) {
-                                degree += correctElem[index];
-                            }
+                        element+=dataTLE[i];
+                        // Удаляем пробелы в начале, если есть
+                        let trimmedElem = element.trim();
+                        // Ищем позицию знака (+ или -) для экспоненты
+                        let signIndex = trimmedElem.search(/[-+]/);
+                        if (signIndex !== -1) {
+                            // Мантисса: всё до знака. Добавляем "0." в начало
+                            let mantissaStr = trimmedElem.substring(0, signIndex);
+                            let mantissa = parseFloat("0." + mantissaStr);
+                            // Экспонента: знак и число после него
+                            let exponent = parseInt(trimmedElem.substring(signIndex), 10);
+                            // Вычисляем значение: мантисса * 10^экспонента
+                            tle.TLE_VTOR_PROIZV = mantissa * Math.pow(10, exponent);
+                        } else {
+                            // Если знака нет (неправильный формат), ставим 0
+                            tle.TLE_VTOR_PROIZV = 0;
                         }
-                        element+=dataTLE[i];
-                        tle.TLE_VTOR_PROIZV=Math.pow(+num,+degree);
-                        element='';
-                        counter+=1;
+                        element = '';
+                        counter += 1;
                     }
-                    else{
-                        element+=dataTLE[i];
+                    else {
+                        element += dataTLE[i];
                     }
                 }
                 else if (i>52 && i<62) {
                     if (i==61) {
-                        let correctElem='';
-                        let num='',degree='';
-                        if (element[0]==' ') {
-                            correctElem=element.replace(/\s/,'0.');
-                            let indexDegree=correctElem.search(/[-+]/);
-                            for (let i = 0; i < indexDegree; i++) {
-                                num+=correctElem[i];
-                            }
-                            for (let index = indexDegree; index < correctElem.length; index++) {
-                                degree += correctElem[index];
-                            }
+                        element += dataTLE[i];
+                        // Удаляем пробелы в начале, если есть
+                        let trimmedElem = element.trim();
+                        // Ищем позицию знака (+ или -) для экспоненты
+                        let signIndex = trimmedElem.search(/[-+]/);
+                        if (signIndex !== -1) {
+                            // Мантисса: всё до знака. Добавляем "0." в начало
+                            let mantissaStr = trimmedElem.substring(0, signIndex);
+                            let mantissa = parseFloat("0." + mantissaStr);
+                            // Экспонента: знак и число после него
+                            let exponent = parseInt(trimmedElem.substring(signIndex), 10);
+                            // ВАЖНО: В TLE экспонента B* сдвинута на -1
+                            tle.TLE_KOEF_TORM = mantissa * Math.pow(10, exponent - 1);
+                        } else {
+                            tle.TLE_KOEF_TORM = 0;
                         }
-                        element+=dataTLE[i];
-                        tle.TLE_KOEF_TORM=num*Math.pow(10,+degree);
-                        element='';
-                        counter+=1;
+                        element = '';
+                        counter += 1;
                     }
-                    else{
-                        element+=dataTLE[i];
+                    else {
+                        element += dataTLE[i];
                     }
                 }
                 else if (i==62) {
@@ -259,8 +258,8 @@ export class TleParser{
                         element+=dataTLE[i];
                     }
                 }
-                else if (i>62 && i<68) {
-                    if (i==67) {
+                else if (i>62 && i<=68) {
+                    if (i==68) {
                         element+=dataTLE[i];
                         tle.TLE_NOMER_VITKA=+element;
                         element='';
@@ -270,7 +269,7 @@ export class TleParser{
                         element+=dataTLE[i];
                     }
                 }
-                else if (i==68) {
+                if (i==68) {
                     element+=dataTLE[i];
                     tle.TLE_CONTROL_SUM_LINE2=+element;
                     element='';
