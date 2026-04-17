@@ -30,9 +30,12 @@ export function eventSend(){
             console.log(idElem)
             LogView.showBegLogRequest(arr,'#comtainer-logs');
             renderPopup(document.querySelector('#dialog-res'),`Данные  отправлены <br> Ожидайте сообщения о пересчете местоположения КА`)
-            recalculateKas(selectedValue).then((res)=>{
-                LogView.showEndLogRequest('#comtainer-logs');
-            })
+            if(document.getElementById('clear').checked){
+                recalculateKas(selectedValue).then((res)=>{
+                    LogView.showEndLogRequest('#comtainer-logs');
+                })
+            }
+
         })
     document.getElementById('task-btn-TLE').disabled=true;
 }

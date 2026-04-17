@@ -88,8 +88,8 @@ export class TleParser{
                 else if (i>32 && i<43) {
                     if (i==42) {
                         element += dataTLE[i];
-                        let correctElem = element.trim(); // Удаляем пробелы в начале и конце
-                        tle.TLE_PERV_PROIZV = parseFloat(correctElem);
+                        let correctElem = element.trim();
+                        tle.TLE_PERV_PROIZV = parseFloat(correctElem) || 0;
                         element = '';
                         counter += 1;
                     } else {
@@ -98,23 +98,27 @@ export class TleParser{
                 }
                 else if (i>43 && i<53) {
                     if (i==52) {
-                        element+=dataTLE[i];
-                        // Удаляем пробелы в начале, если есть
-                        let trimmedElem = element.trim();
-                        // Ищем позицию знака (+ или -) для экспоненты
-                        let signIndex = trimmedElem.search(/[-+]/);
+                        element += dataTLE[i];
+
+                        // Очищаем строку от пробелов
+                        let cleaned = element.replace(/\s+/g, '');
+                        // Убираем ведущий +
+                        cleaned = cleaned.replace(/^\+/, '');
+
+                        let signIndex = cleaned.search(/[-+]/);
+
                         if (signIndex !== -1) {
-                            // Мантисса: всё до знака. Добавляем "0." в начало
-                            let mantissaStr = trimmedElem.substring(0, signIndex);
-                            let mantissa = parseFloat("0." + mantissaStr);
-                            // Экспонента: знак и число после него
-                            let exponent = parseInt(trimmedElem.substring(signIndex), 10);
-                            // Вычисляем значение: мантисса * 10^экспонента
+                            let mantissaStr = cleaned.substring(0, signIndex);
+                            // Убираем ведущие нули
+                            mantissaStr = mantissaStr.replace(/^0+/, '');
+                            let mantissa = mantissaStr.length > 0 ? parseFloat('0.' + mantissaStr) : 0;
+                            let exponent = parseInt(cleaned.substring(signIndex), 10) || 0;
                             tle.TLE_VTOR_PROIZV = mantissa * Math.pow(10, exponent);
                         } else {
-                            // Если знака нет (неправильный формат), ставим 0
-                            tle.TLE_VTOR_PROIZV = 0;
+                            // Если нет знака экспоненты, пробуем как обычное число
+                            tle.TLE_VTOR_PROIZV = parseFloat(cleaned) || 0;
                         }
+
                         element = '';
                         counter += 1;
                     }
@@ -125,21 +129,27 @@ export class TleParser{
                 else if (i>52 && i<62) {
                     if (i==61) {
                         element += dataTLE[i];
-                        // Удаляем пробелы в начале, если есть
-                        let trimmedElem = element.trim();
-                        // Ищем позицию знака (+ или -) для экспоненты
-                        let signIndex = trimmedElem.search(/[-+]/);
+
+                        // Очищаем строку от пробелов
+                        let cleaned = element.replace(/\s+/g, '');
+                        // Убираем ведущий +
+                        cleaned = cleaned.replace(/^\+/, '');
+
+                        let signIndex = cleaned.search(/[-+]/);
+
                         if (signIndex !== -1) {
-                            // Мантисса: всё до знака. Добавляем "0." в начало
-                            let mantissaStr = trimmedElem.substring(0, signIndex);
-                            let mantissa = parseFloat("0." + mantissaStr);
-                            // Экспонента: знак и число после него
-                            let exponent = parseInt(trimmedElem.substring(signIndex), 10);
-                            // ВАЖНО: В TLE экспонента B* сдвинута на -1
+                            let mantissaStr = cleaned.substring(0, signIndex);
+                            // Убираем ведущие нули
+                            mantissaStr = mantissaStr.replace(/^0+/, '');
+                            let mantissa = mantissaStr.length > 0 ? parseFloat('0.' + mantissaStr) : 0;
+                            let exponent = parseInt(cleaned.substring(signIndex), 10) || 0;
+                            // Для B* экспонента сдвинута на -1
                             tle.TLE_KOEF_TORM = mantissa * Math.pow(10, exponent - 1);
                         } else {
-                            tle.TLE_KOEF_TORM = 0;
+                            // Если нет знака экспоненты, пробуем как обычное число
+                            tle.TLE_KOEF_TORM = parseFloat(cleaned) || 0;
                         }
+
                         element = '';
                         counter += 1;
                     }
