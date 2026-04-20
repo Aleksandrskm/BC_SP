@@ -250,7 +250,7 @@
 	position: relative;
 	display: inline-block;
 	cursor: pointer;
-	outline: auto;
+    /*outline: 2px solid black;*/
 	text-decoration: none;
 	font-size: 14px;
 	vertical-align: middle;
@@ -274,12 +274,15 @@
     margin-left: 15px;
     text-align: center;
     border-radius: 6px;
-    border-width: 2px;
+    /*border-width: 2px;*/
     font-size: calc(1rem);
     font-weight: bold;
     font-family: Arial, sans-serif;
-    padding: 8px;
+    padding: 15px;
     box-sizing: border-box;
+    /*border-color: black;*/
+    border: 2px solid black;
+    /*outline: 1px solid black;*/
 }
 #download-tle{
     height: 40px;
@@ -966,6 +969,7 @@ body {
     flex-direction: column;
     min-height: 150px;
     width: 99%;
+    border: 1px solid black;
 }
 #container-content{
     /*border: 1px solid black;*/
@@ -1261,7 +1265,7 @@ body:has(dialog[open]) {
 .closes{
     margin-top: 70%;
 }
-#group_TLE,#type,#country,#organiztion{
+#group_TLE,#type,#country,#organiztion,#groups_TLE{
     max-width: 200px;
     margin-bottom: 10px;
     margin-top: 10px;
@@ -1272,19 +1276,27 @@ body:has(dialog[open]) {
     font-size: calc(1rem);
     font-weight: bold;
     font-family: Arial, sans-serif;
+    box-sizing: border-box;
 }
-#groups_TLE{
-    max-width: 225px;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    padding: 6px;
-    width: max(200px, 12vw);
-    border-radius: 6px;
-    border-width: 2px;
-    font-size: calc(1rem);
-    font-weight: bold;
-    font-family: Arial, sans-serif;
+.blok , .organiztions ,.select_Country,.select_Type{
+    max-width: 400px;
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    justify-content: space-between;
 }
+/*#groups_TLE{*/
+/*    max-width: 225px;*/
+/*    margin-bottom: 10px;*/
+/*    margin-top: 10px;*/
+/*    padding: 6px;*/
+/*    width: max(200px, 12vw);*/
+/*    border-radius: 6px;*/
+/*    border-width: 2px;*/
+/*    font-size: calc(1rem);*/
+/*    font-weight: bold;*/
+/*    font-family: Arial, sans-serif;*/
+/*}*/
 .header3{
     font-size: calc(1.2rem)
 }
