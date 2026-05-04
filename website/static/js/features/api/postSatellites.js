@@ -12,7 +12,7 @@
  * */
 export async function postSatellites(data,url,{group,country_id,purpose_id,organization_id  }){
     try {
-        const response = await fetch(`http://${url}//satellites/from_bc?group=${group}&country_id=${Number(country_id)}&purpose_id=${Number(purpose_id)}&organization_id=${Number(organization_id)}`, {
+        const response = await fetch(`http://${url}/satellites/from_bc?group=${group}&country_id=${Number(country_id)}&purpose_id=${Number(purpose_id)}&organization_id=${Number(organization_id)}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
