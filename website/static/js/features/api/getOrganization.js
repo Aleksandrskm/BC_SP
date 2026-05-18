@@ -5,7 +5,7 @@
  * */
 export async function getOrganization(url){
     try {
-        const response = await fetch(`http://${url}/sprav/organization`, {
+        const response = await fetch(`http://${url}/references/organizations`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

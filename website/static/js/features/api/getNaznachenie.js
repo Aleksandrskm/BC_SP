@@ -5,7 +5,7 @@
  * */
 export async function getNaznachenie(url){
     try {
-        const response = await fetch(`http://${url}/sprav/naznachenie`, {
+        const response = await fetch(`http://${url}/references/purposes`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

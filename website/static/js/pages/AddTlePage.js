@@ -40,10 +40,10 @@ async function  mountCountry(){
     console.log(selectedValue);
     const country = await getCountries(selectedValue);
     const options = [];
-    country.forEach(({ID,NAIM}) => {
+    country.forEach(({id,name}) => {
         const option =document.createElement('option');
-        option.value = ID;
-        option.textContent = NAIM;
+        option.value = id;
+        option.textContent = name;
         options.push(option)
     })
     document.getElementById('country').append(...options)
@@ -54,10 +54,11 @@ async function  mountNaznachenie(){
     console.log(selectedValue);
     const naznachenie = await getNaznachenie(selectedValue);
     const options = [];
-    naznachenie.forEach(({ID,NAIM}) => {
+    naznachenie.forEach(({id,name}) => {
         const option =document.createElement('option');
-        option.value = ID;
-        option.textContent = NAIM;
+        console.log('id',id)
+        option.value = id;
+        option.textContent = name;
         options.push(option)
     })
     document.getElementById('type').append(...options)
@@ -83,10 +84,10 @@ async function  mountOrganizations(){
     const org = await getOrganization(selectedValue);
     const options = [];
     console.log('org',org)
-    org.forEach(({ID,NAIM}) => {
+    org.forEach(({id,name}) => {
         const option =document.createElement('option');
-        option.value = ID;
-        option.textContent = NAIM;
+        option.value = id;
+        option.textContent = name;
         options.push(option)
     })
     document.getElementById('organiztion').append(...options)

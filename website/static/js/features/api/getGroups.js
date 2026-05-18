@@ -5,7 +5,7 @@
  * */
 export async function getGroups(url){
     try {
-        const response = await fetch(`http://${url}/ka/grups`, {
+        const response = await fetch(`http://${url}/satellites/groups`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",

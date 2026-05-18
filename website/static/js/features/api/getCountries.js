@@ -5,7 +5,7 @@
  * */
 export async function getCountries(url){
     try {
-        const response = await fetch(`http://${url}/sprav/country`, {
+        const response = await fetch(`http://${url}/references/countries`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
